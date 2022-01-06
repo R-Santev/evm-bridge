@@ -53,7 +53,7 @@ function getChainConfig(network: keyof typeof chainIds): NetworkUserConfig {
 const config: HardhatUserConfig = {
   defaultNetwork: "localhost",
   solidity: {
-    version: "0.8.11",
+    version: "0.8.9",
     settings: {
       metadata: {
         // Not including the metadata hash
