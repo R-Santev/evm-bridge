@@ -21,13 +21,15 @@ contract TargetChainBridge is Bridge {
         address _receiver
     ) external {
         Token token;
-        if (tokens[_tokenName] == address(0x0)) {
+        string memory _wrappedName = string(abi.encodePacked(wrapPrefix, _tokenName));
+
+        if (tokens[_wrappedName] == address(0x0)) {
             string memory _wrappedSymbol = string(abi.encodePacked(wrapPrefix, _tokenSymbol));
-            token = new Token(_tokenName, _wrappedSymbol, _tokenDecimals);
+            token = new Token(_wrappedName, _wrappedSymbol, _tokenDecimals);
             address _tokenAddress = address(token);
-            tokens[_tokenName] = _tokenAddress;
+            tokens[_wrappedName] = _tokenAddress;
         } else {
-            token = Token(tokens[_tokenName]);
+            token = Token(tokens[_wrappedName]);
         }
 
         token.mint(_receiver, _amount);

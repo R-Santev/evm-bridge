@@ -19,6 +19,7 @@ const chainIds = {
   mainnet: 1,
   rinkeby: 4,
   ropsten: 3,
+  binance_test: 97,
 };
 
 // Ensure that we have all the environment variables we need.
@@ -38,7 +39,11 @@ if (!ETHERSCAN_API_KEY) {
 }
 
 function getChainConfig(network: keyof typeof chainIds): NetworkUserConfig {
-  const url: string = "https://" + network + ".infura.io/v3/" + INFURA_API_KEY;
+  let url: string = "https://" + network + ".infura.io/v3/" + INFURA_API_KEY;
+  if (network === "binance_test") {
+    url = "https://data-seed-prebsc-1-s1.binance.org:8545";
+  }
+
   return {
     accounts: {
       count: 10,
@@ -77,6 +82,7 @@ const config: HardhatUserConfig = {
     kovan: getChainConfig("kovan"),
     rinkeby: getChainConfig("rinkeby"),
     ropsten: getChainConfig("ropsten"),
+    binance_test: getChainConfig("binance_test"),
   },
   gasReporter: {
     currency: "USD",
